@@ -68,7 +68,7 @@ def call_old():
         location = arguments["location"]
         result = get_weather(location)
         print(result)
-    return result, 200
+    return jsonify(result), 200
 
 @app.route('/young', methods=['POST'])
 def call_young():
@@ -102,7 +102,7 @@ def call_young():
         location = arguments["location"]
         result = get_weather(location)
         print(result)
-    return result, 200
+    return jsonify(result), 200
 
 @app.route('/basic', methods=['POST'])
 def call_basic():
@@ -136,7 +136,7 @@ def call_basic():
         location = arguments["location"]
         result = get_weather(location)
         print(result)
-    return result, 200
+    return jsonify(result), 200
 
 def call_openai(prompt):
     completion = client.chat.completions.create(

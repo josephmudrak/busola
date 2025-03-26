@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 import openai
 from dotenv import load_dotenv
 import os
+from openai import OpenAI
 
 app = Flask(__name__)
 
@@ -11,18 +12,8 @@ data_store = ["haha", "hehe"]
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-@app.route('/items', methods=['GET'])
-def get_items():
-    return jsonify(data_store)
-
-@app.route('/items', methods=['POST'])
-def add_item():
-    item = request.json
-    data_store.append(item)
-    return jsonify(item), 201
 
 
-from openai import OpenAI
 
 client = OpenAI()
 

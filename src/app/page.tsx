@@ -49,17 +49,19 @@ export default function Home() {
       className={`bg-sky-900 grid h-screen w-screen grid-rows-[1fr_1fr] font-[family-name:var(--font-fira-sans)]`}
     >
       {/* Top Logo Section */}
-      <div
-        className={`col-span-1 flex justify-center items-center h-full transition-all duration-500
-        ${showActive === "logo" ? "row-span-2" : "row-span-1"}`}
-      >
-        <img
-          src="/485518220_562748372853370_2598884496169271436_n.png"
-          className="max-w-full max-h-full object-contain cursor-pointer"
-          onClick={logoClick}
-          alt="Logo"
-        />
-      </div>
+      {(showActive === "logo" || showActive === "intro") && (
+        <div
+          className={`col-span-1 flex justify-center items-center h-full transition-all duration-500
+        ${showActive === "intro" ? "row-span-1" : "row-span-2"}`}
+        >
+          <img
+            src="/485518220_562748372853370_2598884496169271436_n.png"
+            className="max-w-full max-h-full object-contain cursor-pointer"
+            onClick={logoClick}
+            alt="Logo"
+          />
+        </div>
+      )}
 
       {/* Bottom Content Section (Only visible when 'intro' state is active) */}
       {showActive === "intro" && (
@@ -132,27 +134,36 @@ export default function Home() {
       )}
 
       {showActive === "old" && (
-        <div className="bg-white text-black row-start-2 row-span-1 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[72px_1fr_72px] grid-rows-[20px_repeat(5, 1fr)_20px]">
+        <div className="bg-sky-900 text-black row-start-1 row-span-2 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[36px_36px_1fr_36px_36px] grid-rows-[20px_1fr_1fr_3fr_1fr_3fr_1fr_3fr_1fr_3fr_20px]">
           <button
-            className="col-start-1 col-span-1 row-start-2 row-span-1"
+            className="col-start-1 col-span-2 row-start-2 row-span-1 text-yellow-300 text-xl"
             onClick={() => setActive("intro")}
           >
             ←
           </button>
-          <h2 className="col-start-2 col-span-1 row-start-2 row-span-1 font-semibold">
-            Chcę dowiedzieć się o…
-          </h2>
           <button
-            className="col-start-2 col-span-1 row-start-4 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-4 row-span-1 p-1 text-sky-900 text-xl h-full"
             onClick={() => callBackend("old", "benefits")}
           >
-            świadczeniach
+            <img src="485290800_4583388388601604_6042372492323599183_n.png" />
           </button>
           <button
-            className="col-start-2 col-span-1 row-start-6 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-6 row-span-1 rounded-lg p-1 text-xl h-full"
             onClick={() => callBackend("old", "healthcare")}
           >
-            opiece zdrowotnej
+            <img src="486152923_9340179489433381_1885937236673256181_n.png" />
+          </button>
+          <button
+            className="col-start-2 col-span-3 row-start-8 row-span-1 rounded-lg p-1 text-xl h-full"
+            onClick={() => callBackend("old", "healthcare")}
+          >
+            <img src="485380124_1994063701085771_3571409400247741332_n.png" />
+          </button>
+          <button
+            className="col-start-2 col-span-3 row-start-10 row-span-1 rounded-lg p-1 text-xl h-full"
+            onClick={() => callBackend("old", "healthcare")}
+          >
+            <img src="486066730_466910093077673_7820423069122309640_n.png" />
           </button>
         </div>
       )}

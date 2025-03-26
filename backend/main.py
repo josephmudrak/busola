@@ -23,22 +23,42 @@ def get_weather(location):
 #young
 #######################
 def get_stypedium(prompt):
-    result = call_openai_web(prompt+" Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/edukacja/stypendia/")
+    result = call_openai_web(prompt+" Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/edukacja/stypendia/ podawaj linki źrodła")
     return result
 
 def get_inicjatywy(prompt):
     result = call_openai_web(
-        prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://mlodziwlodzi.pl/inicjatywy/ ")
+        prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://mlodziwlodzi.pl/inicjatywy/ podawaj linki źrodła")
     return result
 
 def get_wydarzenia(prompt):
     result = call_openai_web(
-        prompt+"Odpowiedz możliwie jak najkrocej na podstawie stron https://www.centerko.org/, bierz pod uwagę tylko wydarzenia w łodzi oraz że ma nie brać wydarzeń które się odbyły a jest " + datetime.datetime.now().strftime("%Y-%m-%d"))
+        prompt+"Odpowiedz możliwie jak najkrocej na podstawie stron https://www.centerko.org/, bierz pod uwagę tylko wydarzenia w łodzi oraz że ma nie brać wydarzeń które się odbyły a jest " + datetime.datetime.now().strftime("%Y-%m-%d")+ " podawaj linki źrodła")
     return result
 
 def get_praca(prompt):
     result = call_openai_web(
-        prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://dlamlodych.praca.gov.pl/o-programie, bierz pod uwagę tylko oferty pracy w łodzi")
+        prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://dlamlodych.praca.gov.pl/o-programie, bierz pod uwagę tylko oferty pracy w łodzi podawaj linki źrodła")
+    return result
+#######################
+#old
+def get_swiadczenia(prompt):
+    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/seniorzy/projekty/ podawaj linki źrodła")
+    return result
+def get_opieka(prompt):
+    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://www.gdziepolek.pl/wykaz-darmowych-lekow-dla-seniorow , https://pacjent.gov.pl/internetowe-konto-pacjenta podawaj linki źrodła")
+    return result
+
+#######################
+def get_mieszkalnictwo(prompt):
+    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/dla-mieszkancow/mieszkalnictwo/ podawaj linki źrodła")
+    return result
+def get_pozwolenia(prompt):
+    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://bip.uml.lodz.pl/urzad-miasta/zalatw-sprawe-urzedowa/wyszukiwarka-spraw/nieruchomosci-lokale-geodezja/pozwolenia-na-budowe-i-rozbiorke/KA-01051/ podawaj linki źrodła")
+    return result
+
+def get_oplaty(prompt):
+    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony bierz pod uwagę informacje z miasta Łódź podawaj linki źrodła")
     return result
 #######################
 
@@ -80,15 +100,6 @@ def call_old():
                 "additionalProperties": False
             },
             "strict": True
-        },
-        {
-            "type": "function",
-            "function": {
-                "name": "get_wydarzenia",
-                "description": "Zwróć informacje o wydarzeniach",
-                "additionalProperties": False
-            },
-            "strict": True
         }]
     response = call_openai_with_tools(data.get("prompt"), tools)
     # Extract the function name and arguments
@@ -96,10 +107,12 @@ def call_old():
     arguments = json.loads(response["function"]["arguments"])
     result = 0
     # Call the function with the extracted arguments
-    if function_name == "get_weather":
-        location = arguments["location"]
-        result = get_weather(location)
-        print(result)
+    if function_name == "get_swiadczenia":
+        result = get_swiadczenia(data.get("prompt"))
+        print("swiadczenia")
+    elif function_name == "get_opieka":
+        result = get_opieka(data.get("prompt"))
+        print("opieka")
     return jsonify(result), 200
 
 @app.route('/young', methods=['POST'])
@@ -169,32 +182,46 @@ def call_basic():
     tools = [{
         "type": "function",
         "function": {
-            "name": "get_weather",
-            "description": "Zwróć aktualną temperaturę dla podanej lokalizacji.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "City and country e.g. Bogotá, Colombia"
-                    }
-                },
-                "required": ["location"],
+            "name": "get_mieszkalnictwo",
+            "description": "Zwróć informacje o mieszkalnictwie",
+                "additionalProperties": False
+            },
+        "strict": True
+    },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_pozwolenia",
+                "description": "Zwróć informacje o pozwolenia",
                 "additionalProperties": False
             },
             "strict": True
-        }
-    }]
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_oplaty",
+                "description": "Zwróć informacje o opłaty",
+                "additionalProperties": False
+            },
+            "strict": True
+        }]
     response = call_openai_with_tools(data.get("prompt"), tools)
     # Extract the function name and arguments
     function_name = response["function"]["name"]
     arguments = json.loads(response["function"]["arguments"])
     result = 0
     # Call the function with the extracted arguments
-    if function_name == "get_weather":
-        location = arguments["location"]
-        result = get_weather(location)
-        print(result)
+    if function_name == "get_mieszkalnictwo":
+        result = get_mieszkalnictwo(data.get("prompt"))
+        print("mieszkalnictwo")
+    elif function_name == "get_pozwolenia":
+        result = get_pozwolenia(data.get("prompt"))
+        print("pozwolenia")
+    elif function_name == "get_oplaty":
+        result = get_oplaty(data.get("prompt"))
+        print("oplaty")
+    print(result)
     return jsonify(result), 200
 
 def call_openai(prompt):

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [showActive, setActive] = useState("intro");
+  const [showActive, setActive] = useState("logo");
   const [response, setResponse] = useState("");
 
   const callBackend = async (endpoint: string) => {
@@ -23,8 +23,8 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-orange-800 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-fira-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="bg-sky-600 grid grid-rows-[20px_1fr_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-fira-sans)]">
+      {/* <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <h1 className="text-xl font-semibold text-stone-50">Busola</h1>
         {showActive === "intro" && (
           <>
@@ -98,7 +98,13 @@ export default function Home() {
             <p>{response}</p>
           </div>
         )}
-      </main>
+      </main> */}
+      <div className="row-start-2 row-span-2 col-span-1 flex justify-center items-center">
+        <img
+          src="/485518220_562748372853370_2598884496169271436_n.png"
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
     </div>
   );
 }

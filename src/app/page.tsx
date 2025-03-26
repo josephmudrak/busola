@@ -15,7 +15,10 @@ export default function Home() {
       const res = await fetch(`http://localhost:5000/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: "Jaka jest pogoda w Paryżu?" }),
+        body: JSON.stringify({
+          prompt:
+            "Jakie są dostępne możliwości dla mnie jako osoba ucząca się?",
+        }),
       });
 
       const data = await res.json();

@@ -3,10 +3,12 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -31,7 +33,6 @@ def call_openai_with_tools(prompt, tools, model="gpt-4o"):
         ],
         tools=tools
     )
-
     tool_call = completion.choices[0].message.tool_calls[0]
     return tool_call.to_dict()  # Convert to dictionary
 

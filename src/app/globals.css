@@ -28,6 +28,7 @@ body {
 .markdown-content p {
   margin-bottom: 1rem;
   display: block;
+  text-align: justify;
 }
 
 nextjs-portal {

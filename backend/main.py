@@ -43,7 +43,7 @@ def get_praca(prompt):
 #######################
 #old
 def get_swiadczenia(prompt):
-    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/seniorzy/projekty/ podawaj linki źrodła")
+    result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/seniorzy/projekty/ koniecznie podawaj linki źrodła na końcu odpowiedzi bierz pod uwagę informacje z miasta Łódź")
     return result
 def get_opieka(prompt):
     result = call_openai_web(prompt+"Odpowiedz możliwie jak najkrocej na podstawie strony https://www.gdziepolek.pl/wykaz-darmowych-lekow-dla-seniorow , https://pacjent.gov.pl/internetowe-konto-pacjenta podawaj linki źrodła")
@@ -113,6 +113,7 @@ def call_old():
     elif function_name == "get_opieka":
         result = get_opieka(data.get("prompt"))
         print("opieka")
+    print(result)
     return jsonify(result), 200
 
 @app.route('/young', methods=['POST'])
@@ -248,7 +249,7 @@ def call_openai_web(prompt):
         messages=[
             {
                 "role": "system",
-                "content": "Przeszukaj podaną stronę streść informacje w 50 słowach. Dziel na możliwie jak najwięcej paragrafów"
+                "content": "Przeszukaj podaną stronę streść informacje w 70 słowach. Dziel na możliwie jak najwięcej paragrafów, zawsze podawaj linki źrodła na końcu odpowiedzi bierz pod uwagę informacje z miasta Łódź."
             },
             {
                 "role": "user",

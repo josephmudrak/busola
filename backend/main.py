@@ -18,6 +18,15 @@ def get_weather(location):
     # Placeholder implementation
     return f"The current temperature in {location} is 25°C."
 
+def get_stypedium():
+    result = call_openai_web("Stypendia dla mnie? Odpowiedz możliwie jak najkrocej na podstawie strony https://uml.lodz.pl/edukacja/stypendia/")
+    return result
+
+def get_inicjatywy():
+    result = call_openai_web(
+        "Inicjatywy dla mnie? Odpowiedz możliwie jak najkrocej na podstawie strony https://mlodziwlodzi.pl/inicjatywy/ ")
+    return result
+
 def call_openai_with_tools(prompt, tools, model="gpt-4o"):
     completion = client.chat.completions.create(
         model=model,
@@ -31,7 +40,7 @@ def call_openai_with_tools(prompt, tools, model="gpt-4o"):
                 "content": prompt
             }
         ],
-        tools=tools
+        tools=tools,
     )
     tool_call = completion.choices[0].message.tool_calls[0]
     return tool_call.to_dict()  # Convert to dictionary
@@ -76,32 +85,34 @@ def call_young():
     tools = [{
         "type": "function",
         "function": {
-            "name": "get_weather",
-            "description": "Zwróć aktualną temperaturę dla podanej lokalizacji.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "City and country e.g. Bogotá, Colombia"
-                    }
-                },
-                "required": ["location"],
+            "name": "get_stypedium",
+            "description": "Zwróć informacje o stypendium",
+                "additionalProperties": False
+            },
+        "strict": True
+    },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_inicjatywy",
+                "description": "Zwróć informacje o inicjatywach",
                 "additionalProperties": False
             },
             "strict": True
         }
-    }]
+    ]
     response = call_openai_with_tools(data.get("prompt"), tools)
     # Extract the function name and arguments
     function_name = response["function"]["name"]
     arguments = json.loads(response["function"]["arguments"])
     result = 0
     # Call the function with the extracted arguments
-    if function_name == "get_weather":
-        location = arguments["location"]
-        result = get_weather(location)
-        print(result)
+    if function_name == "get_stypedium":
+        result = get_stypedium()
+        print("stypendium")
+    elif function_name == "get_inicjatywy":
+        result = get_inicjatywy()
+        print("inicjatywy")
     return jsonify(result), 200
 
 @app.route('/basic', methods=['POST'])
@@ -162,16 +173,18 @@ def call_openai_web(prompt):
         messages=[
             {
                 "role": "system",
-                "content": "Jesteś asystentem przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący."
+                "content": "Przeszukaj podaną stronę streść informacje możliwie jak najbardziej zwięźle."
             },
             {
                 "role": "user",
                 "content": prompt
             }
-        ]
+        ],
+        max_completion_tokens=5,
+        max_tokens=5
     )
     print(completion)
-    return jsonify(completion.choices[0].message.content), 200
+    return completion.choices[0].message.content
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -14,6 +14,14 @@ export default function Home() {
     const questions: Record<string, string> = {
       opportunities:
         "Jakie są dostępne możliwości dla mnie jako osoba ucząca się?",
+      scholarships: "Jakie są dostępne stypendia dla osób uczących się?",
+      work: "Jakie firmy oferują staże i praktyki dla studentów?",
+      events: "Jakie wydarzenia odbywają się w Łodzi?",
+      housing: "Jakie są programy wsparcia dla kupujących pierwsze mieszkanie?",
+      permission: "Jak uzyskać pozwolenie na budowę domu?",
+      fees: "Jak złożyć wniosek o dofinansowanie ogrzewania?",
+      benefits: "Jakie świadczenia przysługują emerytom?",
+      healthcare: "Jakie są bezpłatne usługi medyczne dla seniorów?",
     };
 
     const prompt = questions[topic];
@@ -58,10 +66,16 @@ export default function Home() {
           <h2 className="row-start-2 row-span-1 text-center font-semibold">
             Jestem…
           </h2>
-          <button className="row-start-4 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+          <button
+            className="row-start-4 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => setActive("old")}
+          >
             seniorem
           </button>
-          <button className="row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+          <button
+            className="row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => setActive("basicWhiteBitch")}
+          >
             osobą pracującą
           </button>
           <button
@@ -93,14 +107,81 @@ export default function Home() {
           >
             możliwościach
           </button>
-          <button className="col-start-2 col-span-1 row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+          <button
+            className="col-start-2 col-span-1 row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("young", "scholarships")}
+          >
             stypendiach
           </button>
-          <button className="col-start-2 col-span-1 row-start-8 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+          <button
+            className="col-start-2 col-span-1 row-start-8 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("young", "work")}
+          >
             pracy
           </button>
-          <button className="col-start-2 col-span-1 row-start-10 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+          <button
+            className="col-start-2 col-span-1 row-start-10 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("young", "events")}
+          >
             wydarzeniach
+          </button>
+        </div>
+      )}
+
+      {showActive === "old" && (
+        <div className="bg-white text-black row-start-2 row-span-1 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[72px_1fr_72px] grid-rows-[20px_repeat(5, 1fr)_20px]">
+          <button
+            className="col-start-1 col-span-1 row-start-2 row-span-1"
+            onClick={() => setActive("intro")}
+          >
+            ←
+          </button>
+          <h2 className="col-start-2 col-span-1 row-start-2 row-span-1 font-semibold">
+            Chcę dowiedzieć się o…
+          </h2>
+          <button
+            className="col-start-2 col-span-1 row-start-4 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("old", "benefits")}
+          >
+            świadczeniach
+          </button>
+          <button
+            className="col-start-2 col-span-1 row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("old", "healthcare")}
+          >
+            opiece zdrowotnej
+          </button>
+        </div>
+      )}
+
+      {showActive === "basicWhiteBitch" && (
+        <div className="bg-white text-black row-start-2 row-span-1 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[72px_1fr_72px] grid-rows-[20px_repeat(7, 1fr)_20px]">
+          <button
+            className="col-start-1 col-span-1 row-start-2 row-span-1"
+            onClick={() => setActive("intro")}
+          >
+            ←
+          </button>
+          <h2 className="col-start-2 col-span-1 row-start-2 row-span-1 font-semibold">
+            Chcę dowiedzieć się o…
+          </h2>
+          <button
+            className="col-start-2 col-span-1 row-start-4 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("basic", "housing")}
+          >
+            mieszkalnictwie
+          </button>
+          <button
+            className="col-start-2 col-span-1 row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("basic", "permission")}
+          >
+            pozwoleniach na budowę
+          </button>
+          <button
+            className="col-start-2 col-span-1 row-start-8 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
+            onClick={() => callBackend("basic", "fees")}
+          >
+            opłatach
           </button>
         </div>
       )}

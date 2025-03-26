@@ -141,6 +141,9 @@ export default function Home() {
           >
             ←
           </button>
+          <button className="col-start-2 col-span-3 row-start-2 row-span-1 p-1 text-sky-900 text-xl h-full">
+            <img src="486478963_1026952515962155_6846013259516298573_n.png" />
+          </button>
           <button
             className="col-start-2 col-span-3 row-start-4 row-span-1 p-1 text-sky-900 text-xl h-full"
             onClick={() => callBackend("old", "benefits")}

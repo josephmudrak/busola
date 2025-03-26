@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ResponseComponent from "./md";
 
 export default function Home() {
   const [showActive, setActive] = useState("logo");
@@ -36,7 +37,7 @@ export default function Home() {
       });
 
       const data = await res.json();
-      setResponse(JSON.stringify(data, null, 2));
+      setResponse(data);
     } catch (error) {
       console.error("Błąd przy wołaniu API:", error);
       setResponse("Błąd połączenia z backendem.");
@@ -186,11 +187,7 @@ export default function Home() {
         </div>
       )}
 
-      {response && (
-        <div>
-          <p>{response}</p>
-        </div>
-      )}
+      {response && <ResponseComponent response={response}></ResponseComponent>}
     </div>
   );
 }

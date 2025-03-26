@@ -6,6 +6,10 @@ export default function Home() {
   const [showActive, setActive] = useState("logo");
   const [response, setResponse] = useState("");
 
+  const logoClick = () => {
+    setActive("intro");
+  };
+
   const callBackend = async (endpoint: string) => {
     try {
       const res = await fetch(`http://localhost:5000/${endpoint}`, {
@@ -23,88 +27,42 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-sky-600 grid grid-rows-[20px_1fr_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-fira-sans)]">
-      {/* <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h1 className="text-xl font-semibold text-stone-50">Busola</h1>
-        {showActive === "intro" && (
-          <>
-            <p className="text-stone-50">
-              Cześć! Jestem Busola – Twój wirtualny asystent po Łodzi. Pomogę Ci
-              zdobyć informacje i skorzystać z lokalnych usług. Pytaj śmiało!
-            </p>
-            <button
-              className="rounded-xl uppercase p-3 border-orange-400 font-semibold bg-orange-400 text-orange-800"
-              onClick={() => setActive("menu")}
-            >
-              Rozpocznij rozmowę
-            </button>
-          </>
-        )}
-
-        {showActive === "menu" && (
-          <>
-            <button
-              className="rounded uppercase p1 border-orange-400 font-semibold bg-orange-400 text-orange-800"
-              onClick={() => setActive("intro")}
-            >
-              ← Powrót
-            </button>
-            <h2>Jestem…</h2>
-            <button className="rounded-xl uppercase p-3 border-orange-400 font-semibold bg-orange-400 text-orange-800">
-              Seniorem
-            </button>
-            <button className="rounded-xl uppercase p-3 border-orange-400 font-semibold bg-orange-400 text-orange-800">
-              Osobą pracującą
-            </button>
-            <button
-              className="rounded-xl uppercase p-3 border-orange-400 font-semibold bg-orange-400 text-orange-800"
-              onClick={() => setActive("student")}
-            >
-              Osobą uczącą się
-            </button>
-            <button className="rounded-xl uppercase p-3 border-orange-400 font-semibold bg-orange-400 text-orange-800">
-              Inne
-            </button>
-          </>
-        )}
-
-        {showActive === "student" && (
-          <>
-            <button
-              className="rounded uppercase p1 border-orange-400 font-semibold bg-orange-400 text-orange-800"
-              onClick={() => setActive("menu")}
-            >
-              ← Powrót
-            </button>
-            <h2>Dla osób uczących się…</h2>
-            <div className="grid grid-cols-2">
-              <button
-                className="rounded-xl p-2 bg-pink-600"
-                onClick={() => callBackend("young")}
-              >
-                Możliwości
-              </button>
-              <button className="rounded-xl p-2">Stypendia</button>
-              <button className="rounded-xl p-2">Praca</button>
-              <button className="rounded-xl p-2">Wydarzenia</button>
-            </div>
-            <label htmlFor="ask">W czym mogę pomóc?</label>
-            <input type="text" name="ask" className="bg-orange-900" />
-          </>
-        )}
-
-        {response && (
-          <div>
-            <p>{response}</p>
-          </div>
-        )}
-      </main> */}
-      <div className="row-start-2 row-span-2 col-span-1 flex justify-center items-center">
+    <div
+      className={`bg-sky-600 grid h-screen w-screen grid-rows-[1fr_1fr] font-[family-name:var(--font-fira-sans)]`}
+    >
+      {/* Top Logo Section */}
+      <div
+        className={`col-span-1 flex justify-center items-center h-full transition-all duration-500
+        ${showActive === "logo" ? "row-span-2" : "row-span-1"}`}
+      >
         <img
           src="/485518220_562748372853370_2598884496169271436_n.png"
-          className="max-w-full max-h-full object-contain"
+          className="max-w-full max-h-full object-contain cursor-pointer"
+          onClick={logoClick}
+          alt="Logo"
         />
       </div>
+
+      {/* Bottom Content Section (Only visible when 'intro' state is active) */}
+      {showActive === "intro" && (
+        <div className="bg-white text-black row-start-2 row-span-1 w-full h-full justify-center items-center transition-all duration-500 grid grid-rows-[20px_repeat(9, 1fr)_20px]">
+          <h2 className="row-start-2 row-span-1 text-center font-semibold">
+            Jestem…
+          </h2>
+          <button className="row-start-4 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+            seniorem
+          </button>
+          <button className="row-start-6 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+            osobą pracującą
+          </button>
+          <button className="row-start-8 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+            osobą uczącą się
+          </button>
+          <button className="row-start-10 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1">
+            inne
+          </button>
+        </div>
+      )}
     </div>
   );
 }

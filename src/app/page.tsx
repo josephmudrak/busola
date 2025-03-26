@@ -10,14 +10,20 @@ export default function Home() {
     setActive("intro");
   };
 
-  const callBackend = async (endpoint: string) => {
+  const callBackend = async (endpoint: string, topic: string) => {
+    const questions: Record<string, string> = {
+      opportunities:
+        "Jakie są dostępne możliwości dla mnie jako osoba ucząca się?",
+    };
+
+    const prompt = questions[topic];
+
     try {
       const res = await fetch(`http://localhost:5000/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prompt:
-            "Jakie są dostępne możliwości dla mnie jako osoba ucząca się?",
+          prompt: prompt,
         }),
       });
 
@@ -83,7 +89,7 @@ export default function Home() {
           </h2>
           <button
             className="col-start-2 col-span-1 row-start-4 row-span-1 bg-orange-400 outline-2 outline-solid outline-black rounded-lg p-1"
-            onClick={() => callBackend("young")}
+            onClick={() => callBackend("young", "opportunities")}
           >
             możliwościach
           </button>

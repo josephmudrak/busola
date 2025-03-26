@@ -25,6 +25,8 @@ export default function Home() {
       healthcare: "Jakie są bezpłatne usługi medyczne dla seniorów?",
     };
 
+    setActive("waiting");
+
     const prompt = questions[topic];
 
     try {
@@ -36,6 +38,7 @@ export default function Home() {
         }),
       });
 
+      setActive("clear");
       const data = await res.json();
       setResponse(data);
     } catch (error) {
@@ -208,6 +211,17 @@ export default function Home() {
           </button>
         </div>
       )}
+
+      {showActive === "waiting" && (
+        <div className="h-screen bg-white flex">
+          <img
+            className="m-auto"
+            src="485960934_627767213394837_1913318016061804080_n.gif"
+          />
+        </div>
+      )}
+
+      {showActive === "clear" && <div />}
 
       {response && <ResponseComponent response={response}></ResponseComponent>}
     </div>

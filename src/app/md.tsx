@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 const ResponseComponent = ({ response }: { response: string }) => {
   console.log(response);
   return (
-    <div className="markdown-content p-4 bg-white text-black rounded-lg shadow-md">
+    <div className="markdown-content p-4 bg-white text-black shadow-md">
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{response}</ReactMarkdown>
     </div>
   );

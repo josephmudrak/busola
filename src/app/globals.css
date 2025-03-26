@@ -29,3 +29,7 @@ body {
   margin-bottom: 1rem;
   display: block;
 }
+
+nextjs-portal {
+  display: none;
+}

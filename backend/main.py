@@ -29,8 +29,8 @@ def call_openai_with_tools(prompt, tools, model="gpt-4o"):
         ],
         tools=tools
     )
-    print(completion)
-    return completion.choices[0].message.content
+    tool_call = completion.choices[0].message.tool_calls[0]
+    return tool_call.to_dict()  # Convert to dictionary
 
 @app.route('/old', methods=['POST'])
 def call_old():

@@ -4,6 +4,23 @@ import { useState } from "react";
 
 export default function Home() {
   const [showActive, setActive] = useState("intro");
+  const [response, setResponse] = useState("");
+
+  const callBackend = async (endpoint: string) => {
+    try {
+      const res = await fetch(`http://localhost:5000/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: "Jaka jest pogoda w Paryżu?" }),
+      });
+
+      const data = await res.json();
+      setResponse(JSON.stringify(data, null, 2));
+    } catch (error) {
+      console.error("Błąd przy wołaniu API:", error);
+      setResponse("Błąd połączenia z backendem.");
+    }
+  };
 
   return (
     <div className="bg-orange-800 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-fira-sans)]">
@@ -61,7 +78,12 @@ export default function Home() {
             </button>
             <h2>Dla osób uczących się…</h2>
             <div className="grid grid-cols-2">
-              <button className="rounded-xl p-2">Możliwości</button>
+              <button
+                className="rounded-xl p-2 bg-pink-600"
+                onClick={() => callBackend("young")}
+              >
+                Możliwości
+              </button>
               <button className="rounded-xl p-2">Stypendia</button>
               <button className="rounded-xl p-2">Praca</button>
               <button className="rounded-xl p-2">Wydarzenia</button>
@@ -69,6 +91,12 @@ export default function Home() {
             <label htmlFor="ask">W czym mogę pomóc?</label>
             <input type="text" name="ask" className="bg-orange-900" />
           </>
+        )}
+
+        {response && (
+          <div>
+            <p>{response}</p>
+          </div>
         )}
       </main>
     </div>

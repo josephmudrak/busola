@@ -26,6 +26,12 @@ export default function Home() {
 
         {showActive === "menu" && (
           <>
+            <button
+              className="rounded uppercase p1 border-orange-400 font-semibold bg-orange-400 text-orange-800"
+              onClick={() => setActive("intro")}
+            >
+              ← Powrót
+            </button>
             <h2>Jestem…</h2>
             <button className="rounded-xl uppercase p-3 border-orange-400 font-semibold bg-orange-400 text-orange-800">
               Seniorem
@@ -47,6 +53,12 @@ export default function Home() {
 
         {showActive === "student" && (
           <>
+            <button
+              className="rounded uppercase p1 border-orange-400 font-semibold bg-orange-400 text-orange-800"
+              onClick={() => setActive("menu")}
+            >
+              ← Powrót
+            </button>
             <h2>Dla osób uczących się…</h2>
             <div className="grid grid-cols-2">
               <button className="rounded-xl p-2">Możliwości</button>

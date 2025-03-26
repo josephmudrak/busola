@@ -6,103 +6,106 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# In-memory storage for demonstration purposes
-data_store = ["haha", "hehe"]
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
 client = openai.OpenAI()
 
+def get_weather(location):
+    # Placeholder implementation
+    return f"The current temperature in {location} is 25°C."
 
-@app.route("/askchat", methods=["POST"])
-def call_openai():
-    data = request.json
+def call_openai_with_tools(prompt, tools, model="gpt-4o"):
     completion = client.chat.completions.create(
-        model="gpt-4o",
+        model=model,
         messages=[
             {
                 "role": "system",
-                "content": "Jesteś przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący.",
+                "content": "Jesteś asystentem przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący."
             },
-            {"role": "user", "content": data.get("prompt")},
-        ],
-    )
-    print(completion)
-    return jsonify(completion.choices[0].message.content), 200
-
-
-@app.route("/askchatwebsearch", methods=["POST"])
-def call_openai_web():
-    data = request.json
-    completion = client.chat.completions.create(
-        model="gpt-4o-search-preview",
-        messages=[
             {
-                "role": "system",
-                "content": "Jesteś przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący.",
-            },
-            {"role": "user", "content": data.get("prompt")},
+                "role": "user",
+                "content": prompt
+            }
         ],
+        tools=tools
     )
     print(completion)
-    return jsonify(completion.choices[0].message.content), 200
+    return completion.choices[0].message.content
 
 @app.route('/old', methods=['POST'])
 def call_old():
     data = request.json
-    completion = client.chat.completions.create(
-        model="gpt-4o-search-preview",
-        messages=[
-            {
-                "role": "system",
-                "content": "Jesteś asystentem przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący."
+    tools = [{
+        "type": "function",
+        "function": {
+            "name": "get_weather",
+            "description": "Zwróć aktualną temperaturę dla podanej lokalizacji.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "City and country e.g. Bogotá, Colombia"
+                    }
+                },
+                "required": ["location"],
+                "additionalProperties": False
             },
-            {
-                "role": "user",
-                "content": data.get("prompt")
-            }
-        ]
-    )
-    print(completion)
-    return jsonify(completion.choices[0].message.content), 200
+            "strict": True
+        }
+    }]
+    response = call_openai_with_tools(data.get("prompt"), tools)
+    return jsonify(response), 200
 
 @app.route('/young', methods=['POST'])
 def call_young():
     data = request.json
-    completion = client.chat.completions.create(
-        model="gpt-4o-search-preview",
-        messages=[
-            {
-                "role": "system",
-                "content": "Jesteś asystentem przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący."
+    tools = [{
+        "type": "function",
+        "function": {
+            "name": "get_weather",
+            "description": "Get current temperature for a given location.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "City and country e.g. Bogotá, Colombia"
+                    }
+                },
+                "required": ["location"],
+                "additionalProperties": False
             },
-            {
-                "role": "user",
-                "content": data.get("prompt")
-            }
-        ]
-    )
-    print(completion)
-    return jsonify(completion.choices[0].message.content), 200
+            "strict": True
+        }
+    }]
+    response = call_openai_with_tools(data.get("prompt"), tools)
+    return jsonify(response), 200
 
-@app.route('basic', methods=['POST'])
+@app.route('/basic', methods=['POST'])
 def call_basic():
     data = request.json
-    completion = client.chat.completions.create(
-        model="gpt-4o-search-preview",
-        messages=[
-            {
-                "role": "system",
-                "content": "Jesteś asystentem przyjaznym, kompetentnym, wydajnym, młodym i profesjonalnym asystentem dla lokalnych usług rządowych. Podaj dokładne informacje i bądź angażujący."
+    tools = [{
+        "type": "function",
+        "function": {
+            "name": "get_weather",
+            "description": "Get current temperature for a given location.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "City and country e.g. Bogotá, Colombia"
+                    }
+                },
+                "required": ["location"],
+                "additionalProperties": False
             },
-            {
-                "role": "user",
-                "content": data.get("prompt")
-            }
-        ]
-    )
-    print(completion)
-    return jsonify(completion.choices[0].message.content), 200
+            "strict": True
+        }
+    }]
+    response = call_openai_with_tools(data.get("prompt"), tools)
+    return jsonify(response), 200
+
 if __name__ == "__main__":
     app.run(debug=True)

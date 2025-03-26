@@ -172,33 +172,36 @@ export default function Home() {
       )}
 
       {showActive === "basicWhiteBitch" && (
-        <div className="bg-white text-black row-start-2 row-span-1 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[72px_1fr_72px] grid-rows-[20px_repeat(7, 1fr)_20px]">
+        <div className="bg-white text-sky-900 row-start-1 row-span-2 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[36px_36px_1fr_36px_36px] grid-rows-[20px_2fr_1fr_2fr_1fr_2fr_1fr_2fr_20px]">
           <button
-            className="col-start-1 col-span-1 row-start-2 row-span-1"
+            className="col-start-1 col-span-2 row-start-2 row-span-1"
             onClick={() => setActive("intro")}
           >
             ←
           </button>
-          <h2 className="col-start-2 col-span-1 row-start-2 row-span-1 font-semibold">
-            Chcę dowiedzieć się o…
-          </h2>
+          <button className="col-start-2 col-span-3 row-start-2 row-span-1 p-1 text-sky-900 text-xl h-full">
+            <img src="485126112_953401216593719_5210161156494474832_n.png" />
+          </button>
           <button
-            className="col-start-2 col-span-1 row-start-4 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-4 row-span-1 p-1 text-sky-900 h-full min-w-full"
             onClick={() => callBackend("basic", "housing")}
           >
-            mieszkalnictwie
+            <img
+              src="485822764_10058500814180079_5982868281994059904_n(1).png"
+              className="min-w-full"
+            />
           </button>
           <button
-            className="col-start-2 col-span-1 row-start-6 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-6 row-span-1 p-1 text-sky-900 w-full"
             onClick={() => callBackend("basic", "permission")}
           >
-            pozwoleniach na budowę
+            <img src="485760023_523707730465565_4448443696017470106_n.png" />
           </button>
           <button
-            className="col-start-2 col-span-1 row-start-8 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-8 row-span-1 p-1 text-sky-900 w-full"
             onClick={() => callBackend("basic", "fees")}
           >
-            opłatach
+            <img src="485764511_1056798342943689_6098170571613002779_n.png" />
           </button>
         </div>
       )}

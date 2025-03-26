@@ -96,39 +96,42 @@ export default function Home() {
       )}
 
       {showActive === "young" && (
-        <div className="bg-white text-black row-start-2 row-span-1 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[72px_1fr_72px] grid-rows-[20px_repeat(9, 1fr)_20px]">
+        <div className="bg-amber-300 text-sky-900 row-start-1 row-span-2 w-full h-full justify-center items-center transition-all duration-500 grid grid-cols-[36px_36px_1fr_36px_36px] grid-rows-[20px_2fr_1fr_2fr_1fr_2fr_1fr_2fr_1fr_2fr_20px]">
           <button
-            className="col-start-1 col-span-1 row-start-2 row-span-1"
+            className="col-start-1 col-span-2 row-start-2 row-span-1"
             onClick={() => setActive("intro")}
           >
             ←
           </button>
-          <h2 className="col-start-2 col-span-1 row-start-2 row-span-1 font-semibold">
-            Chcę dowiedzieć się o…
-          </h2>
+          <button className="col-start-2 col-span-3 row-start-2 row-span-1 p-1 text-sky-900 text-xl h-full">
+            <img src="486155930_1149694233554900_1197328344132252011_n.png" />
+          </button>
           <button
-            className="col-start-2 col-span-1 row-start-4 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-4 row-span-1 p-1 text-sky-900 h-full min-w-full"
             onClick={() => callBackend("young", "opportunities")}
           >
-            możliwościach
+            <img
+              src="486614176_893108712848661_6283507693605858764_n.png"
+              className="min-w-full"
+            />
           </button>
           <button
-            className="col-start-2 col-span-1 row-start-6 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-6 row-span-1 p-1 text-sky-900 w-full"
             onClick={() => callBackend("young", "scholarships")}
           >
-            stypendiach
+            <img src="485354666_1203100374716210_6710204738007482417_n.png" />
           </button>
           <button
-            className="col-start-2 col-span-1 row-start-8 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-8 row-span-1 p-1 text-sky-900 w-full"
             onClick={() => callBackend("young", "work")}
           >
-            pracy
+            <img src="485004684_1207214194457178_3975133549624889696_n.png" />
           </button>
           <button
-            className="col-start-2 col-span-1 row-start-10 row-span-1 bg-amber-300 outline-2 outline-solid outline-black rounded-lg p-1"
+            className="col-start-2 col-span-3 row-start-10 row-span-1 p-1 text-sky-900 w-full"
             onClick={() => callBackend("young", "events")}
           >
-            wydarzeniach
+            <img src="485317700_970339848624961_6025934882083468112_n.png" />
           </button>
         </div>
       )}
@@ -187,7 +190,7 @@ export default function Home() {
             onClick={() => callBackend("basic", "housing")}
           >
             <img
-              src="485822764_10058500814180079_5982868281994059904_n(1).png"
+              src="485822764_10058500814180079_5982868281994059904_n.png"
               className="min-w-full"
             />
           </button>
